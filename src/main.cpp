@@ -1,7 +1,6 @@
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BMP280.h>
 #include <Wire.h>
-#include <TinyGPS++.h>
 #include <SPI.h>
 #include <LoRa.h>
 
@@ -17,15 +16,14 @@ Adafruit_BMP280 bmp;//objeto do bmp280
 #define RST_PIN 14      // Pino de reset do RFM95W
 #define DIO0_PIN 2      // Pino de interrupção do RFM95W (DIO0)
 
-//NEO-M8N
-#define GPIO16 16
-#define GPIO17 17
-
-TinyGPSPlus gps;//objeto do neo-m8n
+//NEO-M8N (SPI)
+#define GPS_SS_PIN 4    // Chip Select do GPS
+#define GPS_SCK_PIN 18  // Clock do GPS
+#define GPS_MISO_PIN 19 // MISO do GPS
+#define GPS_MOSI_PIN 23 // MOSI do GPS
 
 void setup() {
   //bmp280
-
   Serial.begin(115200);
 
   // Inicializa o pino CO2CILINDER_PIN como saída
@@ -37,7 +35,7 @@ void setup() {
   digitalWrite(LINECUTTER2_PIN, LOW);  // Garante que o skib esteja desligado inicialmente
 
   // Inicia o sensor BMP280
-  if (!bmp.begin(BMP_ADRESS)) { // Endereço I²C padrão
+  if (!bmp.begin(BMP280_ADRESS)) { // Endereço I²C padrão
     Serial.println("Erro: Sensor BMP280 não encontrado!");
     while (1);
   }
@@ -49,11 +47,13 @@ void setup() {
                   Adafruit_BMP280::FILTER_X16,     // Filtro
                   Adafruit_BMP280::STANDBY_MS_500);// Tempo de espera entre medições
 
-  //neo-m8n
-  Serial1.begin(9600, SERIAL_8N1, GPIO16, GPIO17); // RX, TX (GPIO16 e GPIO17 para ESP32)
+  // Inicializa o SPI para o GPS
+  SPI.begin(GPS_SCK_PIN, GPS_MISO_PIN, GPS_MOSI_PIN, GPS_SS_PIN);
+  pinMode(GPS_SS_PIN, OUTPUT);
+  digitalWrite(GPS_SS_PIN, HIGH);
 
- // RFM95W
- LoRa.setPins(SS_PIN, RST_PIN, DIO0_PIN);
+  // RFM95W
+  LoRa.setPins(SS_PIN, RST_PIN, DIO0_PIN);
   if (!LoRa.begin(868E6)) {  // Frequência de operação, pode ser 433E6, 868E6, ou 915E6 dependendo da região
     Serial.println("Falha ao iniciar o LoRa!");
     while (1);
@@ -70,7 +70,6 @@ void loop() {
   bool lineCutter1Deployed = false;
   bool lineCutter2Deployed = false;
 
-
   // Verifica se a altitude alcançou ou ultrapassou 3000 metros
   if (altitude >= 3000) {
     Serial.println("A altitude de 3000 metros foi alcançada!");
@@ -86,18 +85,21 @@ void loop() {
     lineCutter2Deployed = true;
   }
 
-  while (Serial1.available() > 0) {
-    gps.encode(Serial1.read());
-    
-    if (gps.location.isUpdated()) {
-      double latitude = gps.location.lat();
-      double longitude = gps.location.lng();
-      double altitude = gps.altitude.meters();
+  // Lê dados do GPS via SPI
+  digitalWrite(GPS_SS_PIN, LOW);
+  String gpsData = "";
+  while (SPI.transfer(0x00) != '\n') { // Leitura até o caractere de nova linha
+    gpsData += (char)SPI.transfer(0x00);
+  }
+  digitalWrite(GPS_SS_PIN, HIGH);
 
-      // Enviar os dados via LoRa a cada 2 segundos
-      String message = "Lat: " + String(latitude, 6) + " Lon: " + String(longitude, 6) + " Alt: " + String(altitude);
-      sendLoRaMessage(message);
-    }
+  // Processa os dados do GPS
+  if (gpsData.length() > 0) {
+    Serial.println("Dados do GPS recebidos: " + gpsData);
+
+    // Enviar os dados via LoRa a cada 2 segundos
+    String message = "GPS Data: " + gpsData + " Alt: " + String(altitude);
+    sendLoRaMessage(message);
   }
 
   Serial.println("----------------------");
