@@ -80,7 +80,7 @@ void loop() {
     lineCutter1Deployed = true;
   }
 
-  if (altitude <= 2800 && co2Deployed){
+  if (altitude <= 200 && co2Deployed){
     digitalWrite(LINECUTTER2_PIN, HIGH);
     lineCutter2Deployed = true;
   }
