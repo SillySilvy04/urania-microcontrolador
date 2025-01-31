@@ -56,20 +56,18 @@ void setup() {
   pinMode(GPS_SS_PIN, OUTPUT);
   digitalWrite(GPS_SS_PIN, HIGH);
 
-  // Inicializa o módulo LoRa
+  // Inicializa o módulo LoRa (RFM95W)
   LoRa.setPins(SS_PIN, RST_PIN, DIO0_PIN);
   if (!LoRa.begin(868E6)) {
     Serial.println("Falha ao iniciar o LoRa!");
     while (1);
   }
-  Serial.println("LoRa inicializado com sucesso!");
 
   // Inicializa o cartão microSD
   if (!SD.begin(SD_CS_PIN)) {
     Serial.println("Erro ao inicializar o cartão SD!");
     while (1);
   }
-  Serial.println("Cartão SD inicializado com sucesso!");
 }
 
 void loop() {
@@ -96,4 +94,54 @@ void loop() {
     lineCutter2Deployed = true;
   }
 
+  // Lê dados do GPS via SPI
+  digitalWrite(GPS_SS_PIN, LOW);
+  String gpsData = "";
+  while (SPI.transfer(0x00) != '\n') {
+    gpsData += (char)SPI.transfer(0x00);
+  }
+  digitalWrite(GPS_SS_PIN, HIGH);
+
+  // Processa os dados do GPS
+  if (gpsData.length() > 0) {
+    Serial.println("Dados do GPS recebidos: " + gpsData);
+    // Criando mensagem LoRa
+    String message = "GPS Data: " + gpsData + " Alt: " + String(altitude);
+    // Enviar os dados via LoRa
+    sendLoRaMessage(message);
+    // Armazena os dados no microSD
+    logDataToSD(temperature, pressure, altitude, gpsData);
+  }
+
+  Serial.println("----------------------");
+  delay(2000);
+}
+
+// Função para enviar a mensagem via LoRa
+void sendLoRaMessage(String message) {
+  LoRa.beginPacket();
+  LoRa.print(message);
+  LoRa.endPacket();
+  Serial.println("Mensagem enviada via LoRa: " + message);
+}
+
+// Função para armazenar os dados no microSD
+void logDataToSD(float temperature, float pressure, float altitude, String gpsData) {
+  File dataFile = SD.open("datalog.txt", FILE_WRITE);
+
+  if (dataFile) {
+    dataFile.print("Temperatura: ");
+    dataFile.print(temperature);
+    dataFile.print(" °C, Pressão: ");
+    dataFile.print(pressure);
+    dataFile.print(" hPa, Altitude: ");
+    dataFile.print(altitude);
+    dataFile.print(" m, GPS: ");
+    dataFile.println(gpsData);
+    dataFile.close();
+    Serial.println("Dados armazenados no SD.");
+  } else {
+    Serial.println("Erro ao escrever no cartão SD!");
+  }
+}
  
