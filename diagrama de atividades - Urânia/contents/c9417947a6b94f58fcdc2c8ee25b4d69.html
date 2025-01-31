@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>JoinNode2</title>
+    <title>Enviar mensagem via LoRa</title>
     <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic|Source+Code+Pro:300,400,700' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="../assets/css/bootstrap.css">
 <link rel="stylesheet" href="../assets/css/jquery.bonsai.css">
@@ -19,14 +19,14 @@
 
       <!-- Name Title -->
 
-      <h1>JoinNode2</h1>
+      <h1>Enviar mensagem via LoRa</h1>
 
       <!-- Type and Stereotype -->
 
       <section style="margin-top: .5em;">
         <span class="alert alert-info">
-          <span class="node-icon staruml-icon icon-UMLJoinNode"></span>
-          UMLJoinNode
+          <span class="node-icon staruml-icon icon-UMLAction"></span>
+          UMLAction
         </span>
         
       </section>
@@ -44,7 +44,7 @@
           <span class="label label-info"><a href='76c17436b39518a545ddad914d2f7663.html'><span class='node-icon staruml-icon icon-UMLActivity'></span>Activity1</a></span>
         
           <span>::</span>
-          <span class="label label-info"><a href='38d12b957d77829bf3b04535eaac1931.html'><span class='node-icon staruml-icon icon-UMLJoinNode'></span>JoinNode2</a></span>
+          <span class="label label-info"><a href='c9417947a6b94f58fcdc2c8ee25b4d69.html'><span class='node-icon staruml-icon icon-UMLAction'></span>Enviar mensagem via LoRa</a></span>
         
       </section>
 
@@ -141,6 +141,26 @@
       <!-- Action -->
 
       
+        
+        
+
+
+        
+        
+
+
+        
+        
+
+
+        
+        
+
+
+        
+        
+
+      
 
       <!-- Interaction -->
 
@@ -213,7 +233,7 @@
     
     <tr>
         <td>name</td>
-        <td>JoinNode2</td>
+        <td>Enviar mensagem via LoRa</td>
     </tr>
     
     
@@ -239,6 +259,79 @@
         <td>visibility</td>
         <td>public</td>
     </tr>
+    
+    
+    
+    
+    
+    
+    
+    <tr>
+        <td>kind</td>
+        <td>opaque</td>
+    </tr>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <tr>
+        <td>target</td>
+        <td><span class='label label-info'>null</span></td>
+    </tr>
+    
+    
+    
+    
+    
+    <tr>
+        <td>subactivity</td>
+        <td><span class='label label-info'>null</span></td>
+    </tr>
+    
+    
+    
+    
+    
+    <tr>
+        <td>isLocallyReentrant</td>
+        <td><span class='label label-info'>false</span></td>
+    </tr>
+    
+    
+    
+    
+    
+    <tr>
+        <td>isSynchronous</td>
+        <td><span class='label label-info'>true</span></td>
+    </tr>
+    
+    
+    
+    
+    
+    <tr>
+        <td>language</td>
+        <td></td>
+    </tr>
+    
+    
+    
+    
+    
+    <tr>
+        <td>body</td>
+        <td></td>
+    </tr>
+    
+    
     
     
     
@@ -276,11 +369,15 @@
     <h3>Relationships</h3>
     <ul class="nav nav-list">
         
-        <li><a href='499c5bc7efd431eefeef41808c2713c3.html'><span class='node-icon staruml-icon icon-UMLControlFlow'></span>(Acionar linecutter2→JoinNode2)</a></li>
+        <li><a href='d9c4495dfde5497dc01e6e7255102e67.html'><span class='node-icon staruml-icon icon-UMLControlFlow'></span>(Criar mensagem com os dados→Enviar mensagem via LoRa)</a></li>
         
-        <li><a href='a742c2143f1559106efee6341c62f261.html'><span class='node-icon staruml-icon icon-UMLControlFlow'></span>Altitude maior que  200 ou pino de co2  desativado ou linecutter 2 ativado (DecisionNode2→JoinNode2)</a></li>
+        <li><a href='ae7ce98b4ac07a275403d8de6cb1088d.html'><span class='node-icon staruml-icon icon-UMLControlFlow'></span>(Enviar mensagem via LoRa→Aguardar 2 segundos)</a></li>
         
-        <li><a href='7c2bdb17b8384e09e0801f95ff205652.html'><span class='node-icon staruml-icon icon-UMLControlFlow'></span>(JoinNode2→Ler dados GPS)</a></li>
+        <li><a href='b1939f63b8f71948480f6d7a302873b0.html'><span class='node-icon staruml-icon icon-UMLControlFlow'></span>(Dados não atualizados→Enviar mensagem via LoRa)</a></li>
+        
+        <li><a href='e0641449ceee5c9db1d7935c3c3ede7d.html'><span class='node-icon staruml-icon icon-UMLControlFlow'></span>(Enviar mensagem via LoRa→Aguardar 2 segundos)</a></li>
+        
+        <li><a href='6c6d8413690e411739cd1a0cf74bb8ce.html'><span class='node-icon staruml-icon icon-UMLControlFlow'></span>(Enviar mensagem via LoRa→Enviar mensagem para o cartão SD)</a></li>
         
     </ul>
 </section>

@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Enviar mensagem via LoRa</title>
+    <title>Aguardar 2 segundos</title>
     <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic|Source+Code+Pro:300,400,700' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="../assets/css/bootstrap.css">
 <link rel="stylesheet" href="../assets/css/jquery.bonsai.css">
@@ -19,13 +19,13 @@
 
       <!-- Name Title -->
 
-      <h1>Enviar mensagem via LoRa</h1>
+      <h1>Aguardar 2 segundos</h1>
 
       <!-- Type and Stereotype -->
 
       <section style="margin-top: .5em;">
         <span class="alert alert-info">
-          <span class="node-icon staruml-icon icon-UMLAction"></span>
+          <span class="node-icon staruml-icon icon-UMLAcceptTimeEvent"></span>
           UMLAction
         </span>
         
@@ -44,7 +44,7 @@
           <span class="label label-info"><a href='76c17436b39518a545ddad914d2f7663.html'><span class='node-icon staruml-icon icon-UMLActivity'></span>Activity1</a></span>
         
           <span>::</span>
-          <span class="label label-info"><a href='c9417947a6b94f58fcdc2c8ee25b4d69.html'><span class='node-icon staruml-icon icon-UMLAction'></span>Enviar mensagem via LoRa</a></span>
+          <span class="label label-info"><a href='73fe6879fbd915ff32d489bbc3eab3d1.html'><span class='node-icon staruml-icon icon-UMLAcceptTimeEvent'></span>Aguardar 2 segundos</a></span>
         
       </section>
 
@@ -233,7 +233,7 @@
     
     <tr>
         <td>name</td>
-        <td>Enviar mensagem via LoRa</td>
+        <td>Aguardar 2 segundos</td>
     </tr>
     
     
@@ -268,7 +268,7 @@
     
     <tr>
         <td>kind</td>
-        <td>opaque</td>
+        <td>timeEvent</td>
     </tr>
     
     
@@ -369,13 +369,13 @@
     <h3>Relationships</h3>
     <ul class="nav nav-list">
         
-        <li><a href='d9c4495dfde5497dc01e6e7255102e67.html'><span class='node-icon staruml-icon icon-UMLControlFlow'></span>(Criar mensagem com os dados→Enviar mensagem via LoRa)</a></li>
-        
-        <li><a href='ae7ce98b4ac07a275403d8de6cb1088d.html'><span class='node-icon staruml-icon icon-UMLControlFlow'></span>(Enviar mensagem via LoRa→Aguardar 2 segundos)</a></li>
-        
-        <li><a href='b1939f63b8f71948480f6d7a302873b0.html'><span class='node-icon staruml-icon icon-UMLControlFlow'></span>(Dados não atualizados→Enviar mensagem via LoRa)</a></li>
-        
         <li><a href='e0641449ceee5c9db1d7935c3c3ede7d.html'><span class='node-icon staruml-icon icon-UMLControlFlow'></span>(Enviar mensagem via LoRa→Aguardar 2 segundos)</a></li>
+        
+        <li><a href='6c18cfd01da114e54f924a70a9220ed0.html'><span class='node-icon staruml-icon icon-UMLControlFlow'></span>(Aguardar 2 segundos→Ler Altitude BMP280)</a></li>
+        
+        <li><a href='dcd4762e8e839866b67189de569a5994.html'><span class='node-icon staruml-icon icon-UMLControlFlow'></span>Dados não atualizados (DecisionNode1→Aguardar 2 segundos)</a></li>
+        
+        <li><a href='297b86e7a751e21a5dd63532b5203ad0.html'><span class='node-icon staruml-icon icon-UMLControlFlow'></span>(Enviar mensagem para o cartão SD→Aguardar 2 segundos)</a></li>
         
     </ul>
 </section>
